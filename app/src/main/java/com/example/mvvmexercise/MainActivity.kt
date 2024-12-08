@@ -50,8 +50,14 @@ class MainActivity : ComponentActivity() {
 
 private fun Int.toFormattedTime(): String =
     when (this) {
-        in 0..59 -> "00:$this"
-        else -> "${this / 60}:${this % 60}"
+        in 0..59 -> "00:${this.fillToTwoDigits()}"
+        else -> "${(this / 60).fillToTwoDigits()}:${(this % 60).fillToTwoDigits()}"
+    }
+
+private fun Int.fillToTwoDigits(): String =
+    when (this) {
+        in 0..9 -> "0$this"
+        else -> this.toString()
     }
 
 @Composable
@@ -97,7 +103,7 @@ private fun Timer(
 private fun TimerPreview() {
     MVVMExerciseTheme {
         Timer(
-            time = 123,
+            time = 61,
             onStart = {},
             onStop = {},
             isRunning = false,
